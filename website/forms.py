@@ -38,18 +38,18 @@ class RecordForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'email', 'phone_number', 
                  'address', 'city', 'state', 'zipcode']
         
-    def clean_phone_number(self):
-        phone = self.cleaned_data.get('phone_number')
-        # Remove any non-digit characters from phone number
-        phone = ''.join(filter(str.isdigit, phone))
-        if len(phone) < 10:
-            raise forms.ValidationError("Phone number must be at least 10 digits")
-        return phone
+    # def clean_phone_number(self):
+    #     phone = self.cleaned_data.get('phone_number')
+    #     # Remove any non-digit characters from phone number
+    #     phone = ''.join(filter(str.isdigit, phone))
+    #     if len(phone) < 10:
+    #         raise forms.ValidationError("Phone number must be at least 10 digits")
+    #     return phone
     
-    def clean_zipcode(self):
-        zipcode = self.cleaned_data.get('zipcode')
-        # Remove any non-digit characters from zipcode
-        zipcode = ''.join(filter(str.isdigit, zipcode))
-        if not zipcode:
-            raise forms.ValidationError("Zipcode cannot be empty")
-        return zipcode
+    # def clean_zipcode(self): 
+    #     zipcode = self.cleaned_data.get('zipcode')  
+    #     # Remove any non-digit characters from zipcode
+    #     zipcode = ''.join(filter(str.isdigit, zipcode))
+    #     if not zipcode:
+    #         raise forms.ValidationError("Zipcode cannot be empty")
+    #     return zipcode

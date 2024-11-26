@@ -30,7 +30,7 @@
                 <tbody class="table-group-divider">
                     {% for record in records %}
                     <tr>
-                        <td>{{ record.id }}</td>
+                        <td><a href="{% url 'record' record.id %}">{{ record.id }}</a></td>
                         <td>{{ record.first_name }}</td>
                         <td>{{ record.last_name }}</td>
                         <td><a href="mailto:{{ record.email }}">{{ record.email }}</a></td>
@@ -38,7 +38,7 @@
                         <td>{{ record.address }}</td>
                         <td>{{ record.city }}</td>
                         <td>{{ record.state }}</td>
-                        <td>{{ record.zip_code }}</td>
+                        <td>{{ record.zipcode }}</td>
                         <td>{{ record.created_at|date:"M d, Y" }}</td>
                         <td>{{ record.updated_at|date:"M d, Y" }}</td>
                     </tr>
@@ -51,7 +51,7 @@
     {% endif %}
     {% else %}
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-6 offset-md-3">
             <h1 class="h3 mb-3">Login</h1>
             <form method="post" action="{% url 'home' %}">
                 {% csrf_token %}

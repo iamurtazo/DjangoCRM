@@ -67,39 +67,51 @@ def view_record(request, pk):
     else:
         messages.error(request, 'You must be logged in to view a record')
         return redirect('home')
+    
+def delete_record(request, pk):
+    if request.user.is_authenticated:
+        record = Record.objects.get(id=pk)
+        record.delete()
+        messages.success(request, 'Record deleted successfully')
+        return redirect('home')
+    else:
+        messages.error(request, 'You must be logged in to delete a record')
+        return redirect('home')
 
-
-@login_required
+@login_required(login_url='home')
 def add_record(request):
     if request.method == 'POST':
-        form = RecordForm(request.POST)
+        form = RecordForm(request.POST or None)
         if form.is_valid():
             try:
-                # Create record but don't save to DB yet
-                record = form.save(commit=False)
-                
-                # Clean and format data if needed
-                record.phone_number = ''.join(filter(str.isdigit, record.phone_number))
-                record.zipcode = record.zipcode.strip()
-                
-                # Save the record
-                record.save()
-                
+                record = form.save()
                 messages.success(request, 'Record added successfully!')
                 return redirect('home')
-            
             except Exception as e:
                 messages.error(request, f'Error saving record: {str(e)}')
-                return render(request, 'add_record.html', {'form': form})
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
         form = RecordForm()
     
-    return render(request, 'add_record.html', {
-        'form': form,
-        'title': 'Add New Record'
-    })
+    return render(request, 'add_record.html', {'form': form})
+
+@login_required(login_url='home')
+def update_record(request, pk):
+    if request.user.is_authenticated:
+        current_record = Record.objects.get(id=pk)
+        form = RecordForm(request.POST or None, instance=current_record)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Record updated successfully')
+            return redirect('home')
+        # messages.error(request, 'Please correct the errors below.')
+        return render(request, 'update_record.html', {'form': form})
+    else:
+        messages.error(request, 'You must be logged in to update a record')
+        return redirect('home')
+        
+
         
     
 
