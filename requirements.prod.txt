@@ -72,3 +72,5 @@ urllib3==2.5.0
     # via requests
 virtualenv==20.35.4
     # via pre-commit
+whitenoise==6.11.0
+    # via djangocrm
