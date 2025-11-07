@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 from django.conf import settings
 
@@ -23,6 +25,15 @@ class Event(models.Model):
     event_type = models.CharField(
         max_length=50, default=EventType.VIEWED, choices=EventType.choices
     )
-    object_id = models.IntegerField(blank=True, default=-1)
-    model_name = models.CharField(max_length=200, default="contacts.content")
+    object_id = models.PositiveBigIntegerField()
+    content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.CASCADE,
+    )
+    content_object = GenericForeignKey("content_type", "object_id")
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["content_type", "object_id"]),
+        ]

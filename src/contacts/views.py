@@ -35,8 +35,7 @@ def contact_detail(request, id=None, *args, **kwargs):
     Event.objects.create(
         user=request.user,
         event_type=Event.EventType.VIEWED,
-        object_id=instance.id,
-        model_name="contacts.content",
+        content_object=instance,
     )
 
     return render(request, "contacts/detail.html", context)
