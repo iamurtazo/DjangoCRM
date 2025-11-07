@@ -1,6 +1,21 @@
 src/local-cdn/
 src/static/vendors
+src/static/custom-theme
+.DS_Store
 
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+*.sqlite3
+node_modules/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -62,7 +77,6 @@ cover/
 *.log
 local_settings.py
 db.sqlite3
-*.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:
