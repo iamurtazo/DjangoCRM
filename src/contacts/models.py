@@ -8,3 +8,6 @@ User = settings.AUTH_USER_MODEL
 class Contact(models.Model):
     email = models.EmailField(unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return f"/contacts/{self.id}/"

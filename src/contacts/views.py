@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import Contact
+from django.http import Http404
 
 
 @login_required
@@ -17,4 +18,16 @@ def contacts(request, *args, **kwargs):
 
     context = {"object_list": qs}
 
-    return render(request, "contacts/contacts_list.html", context)
+    return render(request, "contacts/list.html", context)
+
+
+@login_required
+def contact_detail(request, id=None, *args, **kwargs):
+    instance = Contact.objects.filter(id=id, user=request.user).first()
+
+    if not instance:
+        raise Http404(f"Contact with id {id} does not exist")
+
+    context = {"object": instance}
+
+    return render(request, "contacts/detail.html", context)
