@@ -7,7 +7,7 @@ def dashboard(request, *args, **kwargs):
     if not request.user.is_authenticated:
         return redirect("auth/google/login/")
 
-    return render(request, "dashboard.html")
+    return render(request, "dashboard/main.html")
 
     # dashboard_html = TEMPLATE_DIR / 'dashboard.html'
     # if not dashboard_html.exists():
