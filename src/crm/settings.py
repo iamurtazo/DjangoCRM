@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # internal
     "contacts",
     "dashboard",
+    "events",
     # Third-party apps - googler
     "rest_framework",
     "rest_framework_simplejwt",

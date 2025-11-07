@@ -3,6 +3,8 @@ from django.shortcuts import render
 from .models import Contact
 from django.http import Http404
 
+from events.models import Event
+
 
 @login_required
 def contacts(request, *args, **kwargs):
@@ -29,5 +31,11 @@ def contact_detail(request, id=None, *args, **kwargs):
         raise Http404(f"Contact with id {id} does not exist")
 
     context = {"object": instance}
+
+    Event.objects.create(
+        event_type=Event.EventType.VIEWED,
+        object_id=instance.id,
+        model_name="contacts.content",
+    )
 
     return render(request, "contacts/detail.html", context)
