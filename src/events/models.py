@@ -1,12 +1,24 @@
 from django.db import models
 
+from django.conf import settings
+
 # Create your models here.
+
+User = settings.AUTH_USER_MODEL
 
 
 class Event(models.Model):
     class EventType(models.TextChoices):
         VIEWED = "viewed", "View Event"
         CREATED = "created", "Create Event"
+
+    user = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL,
+        help_text="The user who triggered the event",
+        related_name="myevents",
+    )
 
     event_type = models.CharField(
         max_length=50, default=EventType.VIEWED, choices=EventType.choices
