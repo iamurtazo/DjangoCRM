@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # internal
     "contacts",
+    "dashboard",
     # Third-party apps - googler
     "rest_framework",
     "rest_framework_simplejwt",
@@ -61,10 +62,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "crm.urls"
 
+TEMPLATES_DIR = BASE_DIR / "templates"
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [TEMPLATES_DIR],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
