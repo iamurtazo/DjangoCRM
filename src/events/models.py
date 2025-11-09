@@ -13,6 +13,7 @@ class Event(models.Model):
     class EventType(models.TextChoices):
         VIEWED = "viewed", "View Event"
         CREATED = "created", "Create Event"
+        SAVED = "save", "Save or Update Event"
 
     user = models.ForeignKey(
         User,
