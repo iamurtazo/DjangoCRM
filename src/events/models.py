@@ -11,6 +11,7 @@ User = settings.AUTH_USER_MODEL
 
 class Event(models.Model):
     class EventType(models.TextChoices):
+        UNKNOWN = "unknown", "Unknown Event"
         VIEWED = "viewed", "View Event"
         CREATED = "created", "Create Event"
         SAVED = "save", "Save or Update Event"

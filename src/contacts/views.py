@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+
+from events.signals import trigger_event
 from .models import Contact
 from django.http import Http404
-
-from events.models import Event
 
 
 @login_required
@@ -32,10 +32,25 @@ def contact_detail(request, id=None, *args, **kwargs):
 
     context = {"object": instance}
 
-    Event.objects.create(
+    trigger_event(
+        instance,
+        is_viewed=True,
         user=request.user,
-        event_type=Event.EventType.VIEWED,
-        content_object=instance,
+        request=request,
     )
+
+    # Event.objects.create(
+    #     user=request.user,
+    #     event_type=Event.EventType.VIEWED,
+    #     content_object=instance,
+    # )
+
+    # event_did_trigger.send(
+    #     sender=instance.__class__,
+    #     user=request.user,
+    #     event_type=Event.EventType.VIEWED,
+    #     content_object=instance,
+    #     request=request,
+    # )
 
     return render(request, "contacts/detail.html", context)
